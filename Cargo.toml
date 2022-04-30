@@ -2,7 +2,9 @@
 name = "quake-log-challenge"
 version = "0.1.0"
 edition = "2021"
+# cargo-features = ["edition2021"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+regex = "1"
