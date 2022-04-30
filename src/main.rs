@@ -1,57 +1,66 @@
+use std::io;
+use std::env;
+use std::fs;
 use regex::Regex;
 use std::collections::HashMap;
 
 
 fn main() {
-    
-    let log_line = 
-"8:04 Kill: 2 5 7: Dono da Bola killed Assasinu Credi by MOD_ROCKET_SPLASH
-7:02 Item: 4 weapon_rocketlauncher
-7:02 Kill: 1022 3 22: <world> killed Isgalamido by MOD_TRIGGER_HURT
-7:02 Item: 5 weapon_shotgun
-7:03 Item: 5 ammo_shells
-7:03 Kill: 4 2 6: Zeh killed Dono da Bola by MOD_ROCKET
-7:08 Item: 4 item_health_large
-7:09 Item: 2 weapon_rocketlauncher
-7:10 Item: 3 weapon_rocketlauncher
-7:11 Item: 4 item_armor_shard
-7:11 Item: 4 item_armor_shard
-7:11 Item: 4 item_armor_shard
-7:11 Item: 4 item_armor_combat
-7:12 Kill: 2 5 7: Dono da Bola killed Assasinu Credi by MOD_ROCKET_SPLASH
-7:12 Item: 2 weapon_rocketlauncher
-7:12 Kill: 4 2 7: Zeh killed Dono da Bola by MOD_ROCKET_SPLASH
-7:13 Item: 4 weapon_rocketlauncher
-7:14 Item: 4 item_armor_shard
-7:14 Item: 4 item_armor_shard
-7:14 Item: 4 item_armor_shard
-7:16 Item: 2 weapon_rocketlauncher
-7:17 Item: 5 weapon_rocketlauncher
-7:18 Item: 5 ammo_rockets
-7:21 Item: 3 ammo_bullets
-7:21 Kill: 2 2 7: Dono da Bola killed Dono da Bola by MOD_ROCKET_SPLASH
-7:23 Kill: 4 3 7: Zeh killed Isgalamido by MOD_ROCKET_SPLASH
-";
+    let args: Vec<String> = env::args().collect();
+    let report = match args.get(1) {
+        Some(filename) => process_file(filename),
+        None => process_stdin(),
+    };
 
-    let report = process_log(&log_line);
-    println!("=================================");
+    eprintln!("=================================");
     println!("{:#?}",report);
-    println!("=================================");
+    eprintln!("=================================");
 }
 
-fn process_log(data: &str) -> Report {
-
-    let re = get_kill_event_regex();
-
-    let mut report = Report::new();
+fn process_stdin() -> Report {
+    eprintln!("Reading from STDIN");
+    let mut analysis = Analysis::new();
     
-    re.captures_iter(data)
-        .map(|cap| Event::new(&cap) )
-        .for_each(|event| report.plus(&event));
-    
-    report
+    for line in io::stdin().lines() {
+        match line {
+            Ok(ref l) => analysis.process_log(&l),
+            Err(error) => eprintln!("error: {}", error),
+        }
+    }
+
+    analysis.report
 }
 
+fn process_file(filename: &str) -> Report {
+    eprintln!("Reading from file: {:?}", &filename);
+    let contents = fs::read_to_string(filename)
+                        .expect("There was an error reading the file");
+    let mut analysis = Analysis::new();
+    analysis.process_log(&contents.to_string());
+    analysis.report
+}
+
+struct Analysis {
+    report: Report,
+    rgx: Regex,
+}
+
+impl Analysis {
+
+    fn new() -> Analysis {
+        let pattern = r"(?P<time>\d+:\d+) (?P<action>Kill): (.*): (?P<killer>.*) killed (?P<victim>.*) by (?P<cause>\w+)";
+        Analysis {
+            report: Report::new(),
+            rgx: Regex::new( pattern ).unwrap(),
+        }
+    }
+
+    fn process_log(&mut self, data: &str) {
+        self.rgx.captures_iter(data)
+            .map(|cap| Event::new(&cap) )
+            .for_each(|event| self.report.plus(&event));
+    }
+}
 
 #[derive(Debug)]
 struct Report {
@@ -102,9 +111,4 @@ impl Event {
             cause: cap["cause"].to_string(),
         }
     }
-}
-
-fn get_kill_event_regex() -> Regex {
-    let pattern = r"(?P<time>\d+:\d+) (?P<action>Kill): (.*): (?P<killer>.*) killed (?P<victim>.*) by (?P<cause>\w+)";
-    Regex::new( pattern ).unwrap()
 }
