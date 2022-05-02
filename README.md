@@ -31,7 +31,7 @@ The file `src/lib.rs` contains the extructure for use in a WebAssembly version f
 
 ```sh
 cargo build --release
-# After this, dthe cli will created at target/release/quake-log-challenge
+# After this, the cli will be created at target/release/quake-log-challenge
 # execute passing file name parameter:
 target/release/quake-log-challenge samples/qgames.log
 
