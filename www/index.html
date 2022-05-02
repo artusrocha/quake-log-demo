@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mini.css/3.0.1/mini-default.min.css">
+    <style>
+    .wrapper{
+      display: block;
+      margin: auto;
+      width: 500px;
+      max-width: 100%;
+    }
+    .or{text-align: center; }
+    #file-upload{text-align: center;}
+    textarea, button{width: 100%;}
+    </style>
+  </head>
+  <body>
+    <script type="module">
+      import init, { analyze } from './pkg/quake_log_challenge.js';
+      await init();
+
+      const write_to_board = async function(payload) {
+        const parsed = JSON.parse(payload);
+        console.log(parsed);
+      	document.getElementById("board").innerHTML = JSON.stringify(
+      		parsed, undefined, 4);
+      }
+      
+      window.process_input_area = async function() {
+      	let inputarea = document.getElementById("input-area");
+      	write_to_board( analyze( inputarea.value ) );
+      }
+
+      window.readTextFile = async function(event) {
+        const file = event.target.files.item(0)
+        const text = await file.text();
+      	write_to_board( analyze( text ) );
+      }
+    </script>
+
+ 	<div class="wrapper">
+	  <div>
+	    <textarea id="input-area"></textarea>
+    	<button onclick="javascript:process_input_area();">Submit</button>
+      </div>
+      <div class="or">OR</div>
+      <div id="file-upload">
+         <label>Choose file to upload</label>
+         <input type="file" onChange="readTextFile(event)" 
+            accept=".log,text/plain"> 
+      </div>      
+    <hr/>
+    <pre id="board"></pre>
+  </body>
+</html>
