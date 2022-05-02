@@ -1,5 +1,5 @@
 [package]
-name = "quake-log-challenge"
+name = "quake-log-demo"
 version = "0.1.0"
 edition = "2021"
 # cargo-features = ["edition2021"]
