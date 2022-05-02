@@ -45,15 +45,28 @@ cat samples/qgames.log | target/release/quake-log-challenge
 
 ```bash
 npx wasm-pack build --target web --out-dir ./www/pkg
-# It will compile for wasm on and create binds for js
+# It will compile for wasm on www/pkg/ folder and create binds for js
 # run ANY http server on www/ folder
 # ex: 
-npx http-server www 
+npx http-server www/ 
 # acess web page on your browser (http://127.0.0.1:8080)
 ```
 
 # Use WASM FFI on node.js server side
 
-```bash
+A interesting thing about wasm, is that your can run it not only on webpages (frontends) but also on any platform that support wasm as v8 (deno, nodejs)
+wasmer, wasmtime, lucet, cloudflare workers.
+And there is an interest on use it as a runtime target with containerization and isolation.
 
+```bash
+npx wasm-pack build --target nodejs --out-dir ./server/pkg
+# It will compile for wasm on server/pkg/ folder and create binds for js
+# go into server folder
+# and run service
+cd server/     # go into server folder
+npm i          # install deps
+npm run server # run service
+
+# at another prompt curl POST
+curl -X POST -H 'Content-Type: text/plain' localhost:3000 --data-binary "@samples/qgames.log"
 ```
