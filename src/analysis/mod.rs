@@ -30,7 +30,7 @@ impl Analysis {
 	        self.kills_rgx.captures_iter( &line )
     	        .for_each(|cap| {
         	       match self.reports.last_mut() {
-        	         Some(r) => r.plus(&cap["killer"], &cap["victim"]),
+        	         Some(r) => r.plus(&cap["killer"], &cap["victim"], &cap["cause"]),
         	         None => eprintln!("Error: kill without game"),
         	       }
             	});
