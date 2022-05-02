@@ -73,3 +73,9 @@ npm run server # run service
 # at another prompt curl POST
 curl -X POST -H 'Content-Type: text/plain' localhost:3000 --data-binary "@samples/qgames.log"
 ```
+
+---
+## TODO
+- Tests
+- Wasmer version
+- Cloudflare workes version
