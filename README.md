@@ -41,8 +41,19 @@ cat samples/qgames.log | target/release/quake-log-challenge
 ```
 
 
+## Use WASM FFI on webpage
 
-
+```bash
+npx wasm-pack build --target web --out-dir ./www/pkg
+# It will compile for wasm on and create binds for js
+# run ANY http server on www/ folder
+# ex: 
+npx http-server www 
+# acess web page on your browser (http://127.0.0.1:8080)
 ```
+
+# Use WASM FFI on node.js server side
+
+```bash
 
 ```
