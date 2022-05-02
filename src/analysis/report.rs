@@ -1,6 +1,9 @@
 use std::collections::HashMap;
+use serde::Serialize;
 
-#[derive(Debug)]
+static WORLD: &str = "<world>";
+
+#[derive(Serialize, Debug)]
 pub struct Report {
     total_kills: i32,
     players: Vec<String>,
@@ -17,18 +20,19 @@ impl Report {
         }
     }
 
-    pub fn plus(&mut self, killer_str: &str, victim_str: &str) {
-        let killer = killer_str.to_owned();
-        let victim = victim_str.to_owned();
-
+    pub fn plus(&mut self, killer: &str, victim: &str) {
         self.total_kills += 1;
-        if ! self.players.contains( &killer ) {
-            self.players.push( killer.clone() )
-        }
-        if ! self.players.contains( &victim ) {
-            self.players.push( victim )
-        }
+        self.add_player( victim.to_owned() );
 
-        *self.kills.entry( killer ).or_default() += 1;
+        if killer != WORLD {
+	        self.add_player( killer.to_owned() );
+    	    *self.kills.entry( killer.to_owned() ).or_default() += 1;
+    	}
+    }
+
+    fn add_player(&mut self, player: String) {
+        if ! self.players.contains( &player ) {
+            self.players.push( player )
+        }    	
     }
 }

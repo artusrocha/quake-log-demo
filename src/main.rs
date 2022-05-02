@@ -12,13 +12,14 @@ fn main() {
         Some(filename) => process_file(filename),
         None => process_stdin(),
     };
+    
+    eprintln!("=================================");
+    eprintln!("");
 
-    eprintln!("=================================");
-    println!("{:#?}",report);
-    eprintln!("=================================");
+    println!("{}", serde_json::to_string(&report).unwrap());
 }
 
-fn process_stdin() -> Report {
+fn process_stdin() -> Vec<Report> {
     eprintln!("Reading from STDIN");
     let mut analysis = Analysis::new();
     
@@ -29,14 +30,14 @@ fn process_stdin() -> Report {
         }
     }
 
-    analysis.report
+    analysis.reports
 }
 
-fn process_file(filename: &str) -> Report {
+fn process_file(filename: &str) -> Vec<Report> {
     eprintln!("Reading from file: {:?}", &filename);
     let contents = fs::read_to_string(filename)
                         .expect("There was an error reading the file");
     let mut analysis = Analysis::new();
     analysis.process_log(&contents.to_string());
-    analysis.report
+    analysis.reports
 }

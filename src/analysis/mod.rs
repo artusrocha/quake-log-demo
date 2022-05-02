@@ -2,25 +2,38 @@ use regex::Regex;
 use report::Report;
 
 pub mod report;
-//mod event;
 
 pub struct Analysis {
-    pub report: Report,
-    rgx: Regex,
+    pub reports: Vec<Report>,
+    games_rgx: Regex,
+    kills_rgx: Regex,
 }
 
 impl Analysis {
 
     pub fn new() -> Analysis {
-        let pattern = r"(?P<time>\d+:\d+) (?P<action>Kill): (.*): (?P<killer>.*) killed (?P<victim>.*) by (?P<cause>\w+)";
+        let games_pattern = r"(\d+:\d+ InitGame: .*)";
+        let kills_pattern = r"(?P<time>\d+:\d+) (?P<action>Kill): (.*): (?P<killer>.*) killed (?P<victim>.*) by (?P<cause>\w+)";
         Analysis {
-            report: Report::new(),
-            rgx: Regex::new( pattern ).unwrap(),
+            reports: vec![],
+            games_rgx: Regex::new( games_pattern ).unwrap(),
+            kills_rgx: Regex::new( kills_pattern ).unwrap(),
         }
     }
 
     pub fn process_log(&mut self, data: &str) {
-        self.rgx.captures_iter(data)
-            .for_each(|cap| self.report.plus(&cap["killer"], &cap["victim"]));
+        for line in data.lines() {
+        	if self.games_rgx.is_match(&line) {
+	        	self.reports.push( Report::new() );        		
+        	}
+
+	        self.kills_rgx.captures_iter( &line )
+    	        .for_each(|cap| {
+        	       match self.reports.last_mut() {
+        	         Some(r) => r.plus(&cap["killer"], &cap["victim"]),
+        	         None => eprintln!("Error: kill without game"),
+        	       }
+            	});
+        }
     }
 }
