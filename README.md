@@ -40,7 +40,8 @@ target/release/quake-log-challenge samples/qgames.log
 cat samples/qgames.log | target/release/quake-log-challenge 
 ```
 
-deno:
+demo:  
+  
 [![asciicast](https://asciinema.org/a/8M6VNnw8fqtxOK1VqQOd1T6eF.svg)](https://asciinema.org/a/8M6VNnw8fqtxOK1VqQOd1T6eF)
 
 ## Use WASM FFI on webpage
