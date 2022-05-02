@@ -52,7 +52,7 @@ npx http-server www/
 # acess web page on your browser (http://127.0.0.1:8080)
 ```
 
-# Use WASM FFI on node.js server side
+## Use WASM FFI on node.js server side
 
 A interesting thing about wasm, is that your can run it not only on webpages (frontends) but also on any platform that support wasm as v8 (deno, nodejs)
 wasmer, wasmtime, lucet, cloudflare workers.
