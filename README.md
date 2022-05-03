@@ -36,14 +36,15 @@ The file `src/lib.rs` contains the extructure for use in a WebAssembly version f
 
 ## Use as CLI
 
-```sh
+```bash
 cargo build --release
-# After this, the cli will be created at target/release/quake-log-challenge
-# execute passing file name parameter:
+## After this, the cli will be created at target/release/quake-log-challenge
+
+## execute passing file name parameter:
 target/release/quake-log-challenge samples/qgames.log
 
-# OR
-# execute passing STDIN:
+## OR
+## execute passing STDIN:
 cat samples/qgames.log | target/release/quake-log-challenge 
 ```
 
@@ -55,11 +56,11 @@ demo:
 
 ```bash
 npx wasm-pack build --target web --out-dir ./www/pkg
-# It will compile for wasm on www/pkg/ folder and create binds for js
-# run ANY http server on www/ folder
-# ex: 
+## It will compile for wasm on www/pkg/ folder and create binds for js
+## run ANY http server on www/ folder
+## ex: 
 npx http-server www/ 
-# acess web page on your browser (http://127.0.0.1:8080)
+## access web page on your browser (http://127.0.0.1:8080)
 ```
 
 ## Use WASM FFI on node.js server side
@@ -70,14 +71,14 @@ And there is an interest on use it as a runtime target with containerization and
 
 ```bash
 npx wasm-pack build --target nodejs --out-dir ./server/pkg
-# It will compile for wasm on server/pkg/ folder and create binds for js
-# go into server folder
-# and run service
+## It will compile for wasm on server/pkg/ folder and create binds for js
+## go into server folder
+## and run service
 cd server/     # go into server folder
 npm i          # install deps
 npm run server # run service
 
-# at another prompt curl POST
+## at another prompt curl POST
 curl -X POST -H 'Content-Type: text/plain' localhost:3000 --data-binary "@samples/qgames.log"
 ```
 
