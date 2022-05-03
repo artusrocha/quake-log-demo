@@ -4,6 +4,13 @@ This repository contains a demo written in Rust (with small pieces of js)
 
 It has a implementation in Rust of a quake 3 log parse.
 
+Instal and setup rust dev tools:
+
+```bash
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+rustup default nightly && rustup update
+```
+
 ```sh
 ./
 ├── Cargo.toml
@@ -79,3 +86,4 @@ curl -X POST -H 'Content-Type: text/plain' localhost:3000 --data-binary "@sample
 - Tests
 - Wasmer version
 - Cloudflare workes version
+- Build with docker
