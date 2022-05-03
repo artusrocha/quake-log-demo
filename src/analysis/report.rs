@@ -34,10 +34,9 @@ impl Report {
     	}
     	
         match DeathType::from_str( cause ) {
-            Ok(death_type) => *self.kills_by_means.entry( death_type )
-						            .or_default() += 1,
-		    Err(e) => eprintln!("Error DeathType not found: {:#?}", e),
-		}
+            Ok(death_type) => *self.kills_by_means.entry( death_type ).or_default() += 1,
+            Err(e) => eprintln!("Error DeathType not found: {:#?}", e),
+        }
     }
 
     fn add_player(&mut self, player: String) {
