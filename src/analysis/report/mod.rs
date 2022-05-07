@@ -2,9 +2,12 @@ use std::collections::HashMap;
 use serde::Serialize;
 use std::str::FromStr;
 
-use self::death_type::DeathType;
+use self::death_types::DeathType;
 
-mod death_type;
+mod death_types;
+
+#[cfg(test)]
+mod test;
 
 static WORLD: &str = "<world>";
 

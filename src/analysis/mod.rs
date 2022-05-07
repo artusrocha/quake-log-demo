@@ -37,3 +37,42 @@ impl Analysis {
         }
     }
 }
+
+#[cfg(test)]
+mod test {
+    use crate::analysis::Analysis;
+
+    #[test]
+    fn should_create_reports_with_zero_len() {
+        let analisys = Analysis::new();
+        assert_eq!(analisys.reports.len(), 0);
+    }
+
+    #[test]
+    fn should_create_reports_with_one_len() {
+        let game_log = [
+            "0:00 ------------------------------------------------------------",
+            "0:00 InitGame: ",
+            "8:04 Kill: 2 5 7: Foo killed Bar by MOD_ROCKET_SPLASH",
+            "20:37 ShutdownGame:" ].join("\n");
+        let mut analisys = Analysis::new();
+        analisys.process_log(&game_log);
+        assert_eq!(analisys.reports.len(), 1);
+    }
+
+    #[test]
+    fn should_create_reports_with_two_len() {
+        let game_log = [
+            "0:00 ------------------------------------------------------------",
+            "0:00 InitGame: ",
+            "8:04 Kill: 2 5 7: Bar killed Foo by MOD_ROCKET_SPLASH",
+            "20:37 ShutdownGame:",
+            "0:00 ------------------------------------------------------------",
+            "0:00 InitGame: ",
+            "8:04 Kill: 2 5 7: Foo killed Bar by MOD_ROCKET_SPLASH",
+            "20:37 ShutdownGame:" ].join("\n");
+        let mut analisys = Analysis::new();
+        analisys.process_log(&game_log);
+        assert_eq!(analisys.reports.len(), 2);
+    }
+}
