@@ -53,6 +53,10 @@ The file `src/main.rs` contains the extructure for use in a CLI version, with in
 
 The file `src/lib.rs` contains the extructure for use in a WebAssembly version for use as wasm ffi (webpage or server side ffi).
 
+Obs:
+- `www` folder contains just files for wasm webpage version.
+- `server` folder contains just files for wasm + nodejs server version.
+
 ## Use as CLI
 
 ```bash
@@ -84,7 +88,7 @@ npx http-server www/
 
 ## Use WASM FFI on node.js server side
 
-A interesting thing about wasm, is that your can run it not only on webpages (frontends) but also on any platform that support wasm as v8 (deno, nodejs)
+A interesting thing about wasm, is that you can run it `not only` on webpages (frontends) but also on any platform that support wasm, as v8 (deno, nodejs)
 wasmer, wasmtime, lucet, cloudflare workers.
 And there is an interest on use it as a runtime target with containerization and isolation.
 
