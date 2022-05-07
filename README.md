@@ -4,31 +4,50 @@ This repository contains a demo written in Rust (with small pieces of js)
 
 It has a implementation in Rust of a quake 3 log parse.
 
-Install and setup rust dev tools:
+- [Use as CLI](#use-as-cli)
+- [Use WASM FFI on webpage](#use-wasm-ffi-on-webpage)
+- [Use WASM FFI on node.js server side](#use-wasm-ffi-on-nodejs-server-side)
 
+
+#### Install and setup rust dev tools:
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 rustup default stable && rustup update
 ```
 
-```sh
+#### Cloning and testing
+```bash 
+git clone https://github.com/artusrocha/quake-log-demo.git
+cd quake-log-demo
+cargo test
+```
+
+Content of this project
+```
 ./
 ├── Cargo.toml
+├── README.md
+├── samples
+│   ├── qgames.log
+│   └── qgames-small.log
+├── server
+│   ├── index.js
+│   ├── package.json
+│   └── package-lock.json
 ├── src
-    ├── analysis
-    │   ├── mod.rs
-    │   └── report.rs
-    ├── lib.rs
-    └── main.rs
+│   ├── analysis
+│   │   ├── mod.rs
+│   │   └── report
+│   │       ├── death_types.rs
+│   │       ├── mod.rs
+│   │       └── test.rs
+│   ├── lib.rs
+│   └── main.rs
 └── www
     ├── favicon.ico
     └── index.html
-├── server
-    ├── index.js
-    ├── package.json
-    └── package-lock.json
 ```
-The parse logic is implemented in Rust on module `src/analysis`.
+The parser logic is implemented in Rust on module `src/analysis`.
 
 The file `src/main.rs` contains the extructure for use in a CLI version, with input from STDIN support and read file (when filename is present)/ as parameter).
 
@@ -38,14 +57,14 @@ The file `src/lib.rs` contains the extructure for use in a WebAssembly version f
 
 ```bash
 cargo build --release
-## After this, the cli will be created at target/release/quake-log-challenge
+## After this, the cli will be created at target/release/quake-log-demo
 
 ## execute passing file name parameter:
-target/release/quake-log-challenge samples/qgames.log
+target/release/quake-log-demo samples/qgames.log
 
 ## OR
 ## execute passing STDIN:
-cat samples/qgames.log | target/release/quake-log-challenge
+cat samples/qgames.log | target/release/quake-log-demo
 ```
 
 demo:
