@@ -4,11 +4,11 @@ This repository contains a demo written in Rust (with small pieces of js)
 
 It has a implementation in Rust of a quake 3 log parse.
 
-Instal and setup rust dev tools:
+Install and setup rust dev tools:
 
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-rustup default nightly && rustup update
+rustup default stable && rustup update
 ```
 
 ```sh
@@ -31,7 +31,7 @@ rustup default nightly && rustup update
 The parse logic is implemented in Rust on module `src/analysis`.
 
 The file `src/main.rs` contains the extructure for use in a CLI version, with input from STDIN support and read file (when filename is present)/ as parameter).
-  
+
 The file `src/lib.rs` contains the extructure for use in a WebAssembly version for use as wasm ffi (webpage or server side ffi).
 
 ## Use as CLI
@@ -45,11 +45,11 @@ target/release/quake-log-challenge samples/qgames.log
 
 ## OR
 ## execute passing STDIN:
-cat samples/qgames.log | target/release/quake-log-challenge 
+cat samples/qgames.log | target/release/quake-log-challenge
 ```
 
-demo:  
-  
+demo:
+
 [![asciicast](https://asciinema.org/a/8M6VNnw8fqtxOK1VqQOd1T6eF.svg)](https://asciinema.org/a/8M6VNnw8fqtxOK1VqQOd1T6eF)
 
 ## Use WASM FFI on webpage
@@ -58,8 +58,8 @@ demo:
 npx wasm-pack build --target web --out-dir ./www/pkg
 ## It will compile for wasm on www/pkg/ folder and create binds for js
 ## run ANY http server on www/ folder
-## ex: 
-npx http-server www/ 
+## ex:
+npx http-server www/
 ## access web page on your browser (http://127.0.0.1:8080)
 ```
 

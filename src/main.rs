@@ -12,7 +12,7 @@ fn main() {
         Some(filename) => process_file(filename),
         None => process_stdin(),
     };
-    
+
     eprintln!("=================================");
     eprintln!("");
 
@@ -22,20 +22,38 @@ fn main() {
 fn process_stdin() -> Vec<Report> {
     eprintln!("Reading from STDIN");
     let mut analysis = Analysis::new();
-    
-    for line in io::stdin().lines() {
-        match line {
-            Ok(ref l) => analysis.process_log(&l),
-            Err(error) => eprintln!("error: {}", error),
+
+    let mut input = String::new();
+    loop {
+    match io::stdin().read_line(&mut input) {
+        Ok(n_bytes_readed) => {
+            if n_bytes_readed == 0 {
+                eprintln!("End Of Input");
+                break
+            }
+            analysis.process_log(&input);
+
         }
+        Err(error) => eprintln!("error: {}", error),
+    }
+    input.clear()
     }
 
+    // for line in io::stdin().lines() {
+        // match line {
+            // Ok(ref l) =>
+//            analysis.process_log(&l),
+            // Err(error) => eprintln!("error: {}", error),
+        // }
+    // }
+//
     analysis.reports
 }
 
 fn process_file(filename: &str) -> Vec<Report> {
     eprintln!("Reading from file: {:?}", &filename);
     let contents = fs::read_to_string(filename)
+
                         .expect("There was an error reading the file");
     let mut analysis = Analysis::new();
     analysis.process_log(&contents.to_string());
