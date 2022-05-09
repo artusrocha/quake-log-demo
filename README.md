@@ -1,6 +1,6 @@
-# quake-log-demo [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/artusrocha/quake-log-demo)
+# quake-log-demo 
 
-This repository contains a demo written in Rust (with small pieces of js)
+This repository contains a demo written in Rust (with small pieces of js). [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/artusrocha/quake-log-demo)
 
 It has a implementation in Rust of a quake 3 log parse.
 
