@@ -13,7 +13,7 @@ fn main() {
         None => process_stdin(),
     };
 
-    eprintln!("=================================");
+    eprintln!("================================");
     eprintln!("");
 
     println!("{}", serde_json::to_string(&report).unwrap());
