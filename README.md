@@ -57,6 +57,9 @@ Obs:
 - `www` folder contains just files for wasm webpage version.
 - `server` folder contains just files for wasm + nodejs server version.
 
+### About tests
+Diferent from other languages, in Rust, write tests in the same file of the code we are testing is a *idiomatic* way. Other way is write at other file in the as a submodule and reference it on the file that is been tested. Both ways are exemplified on this project.
+
 ## Use as CLI
 
 ```bash
@@ -76,6 +79,7 @@ demo:
 [![asciicast](https://asciinema.org/a/8M6VNnw8fqtxOK1VqQOd1T6eF.svg)](https://asciinema.org/a/8M6VNnw8fqtxOK1VqQOd1T6eF)
 
 ## Use WASM FFI on webpage
+You can find a preview -> (here)[https://htmlpreview.github.io/?https://github.com/artusrocha/quake-log-demo/blob/main/www/index.html]
 
 ```bash
 npx wasm-pack build --target web --out-dir ./www/pkg
@@ -107,7 +111,6 @@ curl -X POST -H 'Content-Type: text/plain' localhost:3000 --data-binary "@sample
 
 ---
 ## TODO
-- Tests
 - Wasmer version
 - Cloudflare workes version
 - Build with docker
