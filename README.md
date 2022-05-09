@@ -79,7 +79,7 @@ demo:
 [![asciicast](https://asciinema.org/a/8M6VNnw8fqtxOK1VqQOd1T6eF.svg)](https://asciinema.org/a/8M6VNnw8fqtxOK1VqQOd1T6eF)
 
 ## Use WASM FFI on webpage
-You can find a preview -> (here)[https://htmlpreview.github.io/?https://github.com/artusrocha/quake-log-demo/blob/main/www/index.html]
+> You can find a preview -> [here](https://quake-log-demo.pages.dev/)
 
 ```bash
 npx wasm-pack build --target web --out-dir ./www/pkg
